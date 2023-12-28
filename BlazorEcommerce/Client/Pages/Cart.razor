@@ -1,5 +1,6 @@
 ﻿@page "/cart"
 @inject ICartService CartService
+@inject IOrderService OrderService
 
 <PageTitle>Shopping Cart</PageTitle>
 
@@ -23,7 +24,9 @@ else
                     <span>@product.ProductType</span><br />
                     <input type="number" value="@product.Quantity" @onchange="((ChangeEventArgs e) => UpdateQuantity(e, product))" class="form-control input-quantity" min="1" />
                     <button class="btn-delete" @onclick="@(() =>
-                        RemoveProductFromCart(product.ProductId, product.ProductTypeId))">Delete</button>
+                        RemoveProductFromCart(product.ProductId, product.ProductTypeId))">
+                        Delete
+                    </button>
                 </div>
                 <div class="cart-item-product-price">€@(product.Price * product.Quantity)</div>
             </div>
@@ -32,6 +35,7 @@ else
             Total (@cartProducts.Count()): €@cartProducts.Sum(product => product.Price * product.Quantity);
         </div>
     </div>
+    <button @onclick="PlaceOrder" class="btn btn-success float-end mt-1">Place Order</button>
 }
 
 
@@ -75,5 +79,10 @@ else
             product.Quantity = 1;
         }
         await CartService.UpdateQuantity(product);
+    }
+
+    private async Task PlaceOrder() 
+    {
+        await OrderService.PlaceOrder();
     }
 }
