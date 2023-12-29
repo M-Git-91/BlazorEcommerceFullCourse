@@ -6,6 +6,10 @@
     <h3>Logged in with @context.User.Identity.Name</h3>
 </AuthorizeView>
 
+<h5>Delivery Address</h5>
+<AddressForm />
+<p></p>
+
 <h5>Change Password</h5>
 <EditForm Model="request" OnInvalidSubmit="ChangePassword">
     <DataAnnotationsValidator></DataAnnotationsValidator>
