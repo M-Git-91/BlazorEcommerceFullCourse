@@ -22,6 +22,19 @@ namespace BlazorEcommerce.Client.Services.ProductService
 
         public event Action ProductChanged;
 
+        public async Task<Product> CreateProduct(Product product)
+        {
+            var result = await _http.PostAsJsonAsync("api/product", product);
+            var newProduct = (await result.Content
+                .ReadFromJsonAsync<ServiceResponse<Product>>()).Data;
+            return newProduct;
+        }
+
+        public async Task DeleteProduct(Product product)
+        {
+            var result = await _http.DeleteAsync($"api/product/{product.Id}");
+        }
+
         public async Task GetAdminProducts()
         {
             var result = await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("/api/product/admin");
@@ -80,6 +93,12 @@ namespace BlazorEcommerce.Client.Services.ProductService
                 Message = "No products found.";
             }
             ProductChanged?.Invoke();
+        }
+
+        public async Task<Product> UpdateProduct(Product product)
+        {
+            var result = await _http.PutAsJsonAsync($"api/product", product);
+            return (await result.Content.ReadFromJsonAsync<ServiceResponse<Product>>()).Data;
         }
     }
 }
