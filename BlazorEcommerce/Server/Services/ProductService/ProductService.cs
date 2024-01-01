@@ -26,7 +26,7 @@ namespace BlazorEcommerce.Server.Services.ProductService
             return new ServiceResponse<Product> { Data = product };
         }
 
-        public async Task<ServiceResponse<bool>> DeleteProductAsync(int productId)
+        public async Task<ServiceResponse<bool>> DeleteProduct(int productId)
         {
             var dbProduct = await _context.Products.FindAsync(productId);
             if (dbProduct != null)
@@ -185,10 +185,10 @@ namespace BlazorEcommerce.Server.Services.ProductService
             return response;
         }
 
-        public async Task<ServiceResponse<Product>> UpdateProductAsync(Product product)
+        public async Task<ServiceResponse<Product>> UpdateProduct(Product product)
         {
             var dbProduct = await _context.Products.FindAsync(product.Id);
-            if (dbProduct != null)
+            if (dbProduct == null)
             {
                 return new ServiceResponse<Product>
                 {
@@ -202,6 +202,7 @@ namespace BlazorEcommerce.Server.Services.ProductService
             dbProduct.ImageUrl = product.ImageUrl;
             dbProduct.CategoryId = product.CategoryId;
             dbProduct.Visible = product.Visible;
+            dbProduct.Featured = product.Featured;
 
             foreach (var variant in product.Variants)
             {
@@ -222,10 +223,9 @@ namespace BlazorEcommerce.Server.Services.ProductService
                     dbVariant.Visible = variant.Visible;
                     dbVariant.Deleted = variant.Deleted;
                 }
-
-                await _context.SaveChangesAsync();
-                return new ServiceResponse<Product> { Data = product}
             }
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<Product> { Data = product };
         }
 
         private async Task<List<Product>> FindProductsBySearchText(string searchText)

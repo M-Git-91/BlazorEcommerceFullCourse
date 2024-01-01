@@ -19,7 +19,7 @@ namespace BlazorEcommerce.Client.Services.ProductService
         Task GetAdminProducts();
         Task<Product> CreateProduct(Product product);
         Task<Product> UpdateProduct(Product product);
-        Task DeleteProduct(int productId);
+        Task DeleteProduct(Product product);
 
     }
 }

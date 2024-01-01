@@ -36,7 +36,7 @@ namespace BlazorEcommerce.Server.Controllers
         [HttpPut, Authorize(Roles = "Admin")]
         public async Task<ActionResult<ServiceResponse<Product>>> UpdateProduct(Product product)
         {
-            var result = await _productService.UpdateProductAsync(product);
+            var result = await _productService.UpdateProduct(product);
             return Ok(result);
 
         }
@@ -44,7 +44,7 @@ namespace BlazorEcommerce.Server.Controllers
         [HttpDelete("{id}"), Authorize(Roles = "Admin")]
         public async Task<ActionResult<ServiceResponse<bool>>> DeleteProduct(int id)
         {
-            var result = await _productService.DeleteProductAsync(id);
+            var result = await _productService.DeleteProduct(id);
             return Ok(result);
 
         }
