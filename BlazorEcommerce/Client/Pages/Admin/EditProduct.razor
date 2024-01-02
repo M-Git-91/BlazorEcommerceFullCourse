@@ -189,11 +189,12 @@ else
 
     async void DeleteProduct()
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {product.Title} ?");
+        /*bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm",
+            $"Do you really want to delete '{product.Title}'?");
         if (confirmed)
-        {
-            await ProductService.DeleteProduct(product);
-            NavigationManager.NavigateTo("admin/products");
-        }
+        {}*/
+        await ProductService.DeleteProduct(product);
+        NavigationManager.NavigateTo("admin/products");
+    
     }
 }

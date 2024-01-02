@@ -38,6 +38,7 @@ namespace BlazorEcommerce.Server.Services.ProductService
                 };
             }
             dbProduct.Deleted = true;
+            await _context.SaveChangesAsync();
             return new ServiceResponse<bool> {  Data = true };
         }
 
